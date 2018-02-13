@@ -5,18 +5,18 @@ use Slim\Container;
 $container = $app->getContainer();
 
 // Database connection
-$container['pdo'] = function ($c) {
-  $settings = $c->get('settings')['db'];
-  $pdo = new PDO("mysql:host=" . $settings['host'] . ";dbname=" . $settings['database'],
-  $settings['username'], $settings['password']);
-  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-  return $pdo;
+$container['db'] = function ($container) {
+  $capsule = new \Illuminate\Database\Capsule\Manager;
+  $capsule->addConnection($container['settings']['db']);
+
+  $capsule->setAsGlobal();
+  $capsule->bootEloquent();
+
+  return $capsule;
 };
 
 $container['authCtrl'] = function ($c) {
-  $table = 'users';
-  $controller = new \App\Controllers\AuthCtrl($table);
+  $controller = new \App\Controllers\AuthCtrl($c);
   return $controller;
 };
 

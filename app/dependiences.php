@@ -14,5 +14,10 @@ $container['pdo'] = function ($c) {
   return $pdo;
 };
 
+$container['authCtrl'] = function ($c) {
+  $table = 'users';
+  $controller = new \App\Controllers\AuthCtrl($table);
+  return $controller;
+};
 
 ?>

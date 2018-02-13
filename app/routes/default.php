@@ -7,5 +7,7 @@ $app->get('/hello', function (ServerRequestInterface $request, ResponseInterface
     return $this->response->withJson('Hola! It works');
   });
 
+$app->get('/auth', \authCtrl::class . ':auth');
+
 
 ?>

@@ -1,6 +1,25 @@
 {
+    "name": "slim/slim-restful-api",
+    "description": "A Slim Framework skeleton application for rapid development",
+    "keywords": ["microframework", "rest", "router", "psr7"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maksymilian Zdunski",
+            "email": "zax1984@gmail.com",
+            "homepage": "http://www.mzdunski.net/"
+        }
+    ],
     "require": {
-        "slim/slim": "^3.0",
-        "tuupola/slim-jwt-auth": "^2.3"
+        "slim/slim": "^3.1",
+        "slim/php-view": "^2.0",
+        "monolog/monolog": "^1.17",
+        "tuupola/slim-jwt-auth": "^2.3",
+        "robmorgan/phinx": "^0.5.1"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "app"
+        }
     }
 }

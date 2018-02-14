@@ -1,4 +1,10 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET,POST,OPTIONS,DELETE,PUT");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Credentials: true");
+header("Connection: Keep-alive");
+
 require_once './vendor/autoload.php';
 
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,11 +25,11 @@ $container["jwt"] = function ($container) {
 $app->add(new \Slim\Middleware\JwtAuthentication([
     "secret" => $container->get('settings')['token']['secret'],
     "header" => "Bearer",
+    "secure" => false,
     "algorithm" => ["HS256"],
     "rules" => [
         new \Slim\Middleware\JwtAuthentication\RequestPathRule([
-            "path" => "/api",
-            "passthrough" => ["/api/auth"]
+            "passthrough" => ["/auth"]
         ]),
         new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
             "passthrough" => ["GET","OPTIONS"]

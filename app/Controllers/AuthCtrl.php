@@ -2,54 +2,49 @@
 
 namespace App\Controllers;
 
+use App\Models\authModel;
+
+use Illuminate\Database\Query\Builder;
+use Illuminate\Database\QueryException;
+
+use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use \Firebase\JWT\JWT;
-use \Datetime;
 
-class authCtrl {  
+class authCtrl {
 
-  public function __construct($c) {
-    
-    $this->ci = $c;
+  private $logger;
+
+  public function __construct(Builder $table) {
+
+    $this->table = $table->from;
+
+    $this->model = new authModel($this->table);
 
   }
 
-  public function auth(ServerRequestInterface $request, ResponseInterface $response, $args) {
+  public function auth(ServerRequestInterface $request, ResponseInterface $response) {
 
-    try {
-      $req_params = $request->getParsedBody();
+    $sth = $this->model->authUser($request->getParsedBody());
 
-      $sth = $this->ci->db->table('users')->get();
+    if(array_key_exists('error',$sth)) {
 
-      $now = new DateTime();
+      if(array_key_exists('statusCode', $sth)) {
 
-      $future = new DateTime("now +1 hour");
+      return $response->withStatus($sth['statusCode'])->withJson($sth);
 
-      $payload = [
-          "iat" => $now->getTimeStamp(),
-          "exp" => $future->getTimeStamp(),
-          "user"=> $req_params['user']
-      ];
+      } else {
 
-      $secret = "afromoths1984";
+        return $response->withStatus(400)->withJson($sth);
 
-      $token = JWT::encode($payload, $secret, "HS256");
-      
-      $cccc = [
-        "status"  => '1',
-        "token"   => $token
-      ];
+      }
 
-      return $response->withJson($cccc);
     }
-    catch (PDOException $e) {
-      echo '{"error": {"text": '.$e->getMessage().'}}';
-    }
-    
+
+    return $response->withJson($sth);
+
   }
 
 }
-
 
 ?>

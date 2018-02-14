@@ -16,7 +16,38 @@ $container['db'] = function ($container) {
 };
 
 $container['authCtrl'] = function ($c) {
-  $controller = new \App\Controllers\AuthCtrl($c);
+  $table = $c->get('db')->table('users');
+  $controller = new \App\Controllers\AuthCtrl($table);
+  return $controller;
+};
+
+$container['insectAdult'] = function ($c) {
+  $table = $c->get('db')->table('adult');
+  $controller = new \App\Controllers\simpleDataCtrl($table);
+  return $controller;
+};
+
+$container['insectCountries'] = function ($c) {  
+  $table = $c->get('db')->table('countries');
+  $controller = new \App\Controllers\simpleDataCtrl($table);
+  return $controller;
+};
+
+$container['insectFood'] = function ($c) {  
+  $table = $c->get('db')->table('food');
+  $controller = new \App\Controllers\simpleDataCtrl($table);
+  return $controller;
+};
+
+$container['insectFamilies'] = function ($c) {  
+  $table = $c->get('db')->table('families');
+  $controller = new \App\Controllers\simpleDataCtrl($table);
+  return $controller;
+};
+
+$container['insectSubfamilies'] = function ($c) {
+  $table = $c->get('db')->table('subfamilies');
+  $controller = new \App\Controllers\simpleDataCtrl($table);
   return $controller;
 };
 

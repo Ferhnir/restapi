@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\simpleDataModel as insectModel;
+use App\Models\dataModel as insectModel;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\QueryException;
@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class SimpleDataCtrl extends Controller {
+class dataCtrl extends Controller {
 
   public function __construct(Builder $table) {
 

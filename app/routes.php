@@ -10,4 +10,7 @@
   require 'app/routes/insectFood.php';  
   //Data operations advanced
   require 'app/routes/insectSubfamilies.php';
+  require 'app/routes/insectTribes.php';
+  require 'app/routes/insectGenus.php';
+  require 'app/routes/insectSpecies.php';
   ?>

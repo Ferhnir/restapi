@@ -23,9 +23,11 @@ $container["jwt"] = function ($container) {
 };
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
+    "environment" => "HTTP_X_AUTHORIZATION",
     "secret" => $container->get('settings')['token']['secret'],
     "header" => "Bearer",
-    "secure" => false,
+    "secure" => true,
+    "relaxed" => ["localhost", "africanmoths.com"],
     "algorithm" => ["HS256"],
     "rules" => [
         new \Slim\Middleware\JwtAuthentication\RequestPathRule([

@@ -23,32 +23,49 @@ $container['authCtrl'] = function ($c) {
 
 $container['insectAdult'] = function ($c) {
   $table = $c->get('db')->table('adult');
-  $controller = new \App\Controllers\simpleDataCtrl($table);
+  $controller = new \App\Controllers\dataCtrl($table);
   return $controller;
 };
 
 $container['insectCountries'] = function ($c) {  
   $table = $c->get('db')->table('countries');
-  $controller = new \App\Controllers\simpleDataCtrl($table);
+  $controller = new \App\Controllers\dataCtrl($table);
   return $controller;
 };
 
 $container['insectFood'] = function ($c) {  
   $table = $c->get('db')->table('food');
-  $controller = new \App\Controllers\simpleDataCtrl($table);
+  $controller = new \App\Controllers\dataCtrl($table);
   return $controller;
 };
 
 $container['insectFamilies'] = function ($c) {  
   $table = $c->get('db')->table('families');
-  $controller = new \App\Controllers\simpleDataCtrl($table);
+  $controller = new \App\Controllers\dataCtrl($table);
   return $controller;
 };
 
 $container['insectSubfamilies'] = function ($c) {
   $table = $c->get('db')->table('subfamilies');
-  $controller = new \App\Controllers\simpleDataCtrl($table);
+  $controller = new \App\Controllers\dataCtrl($table);
   return $controller;
 };
 
+$container['insectTribes'] = function ($c) {
+  $table = $c->get('db')->table('tribes');
+  $controller = new \App\Controllers\dataCtrl($table);
+  return $controller;
+};
+
+$container['insectGenus'] = function ($c) {
+  $table = $c->get('db')->table('genus');
+  $controller = new \App\Controllers\dataCtrl($table);
+  return $controller;
+};
+
+$container['insectSpecies'] = function ($c) {
+  $table = $c->get('db')->table('species');
+  $controller = new \App\Controllers\dataCtrl($table);
+  return $controller;
+};
 ?>

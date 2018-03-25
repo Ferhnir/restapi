@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\errorHandler;
+use App\ErrorHandler;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\QueryException;
 
-class SimpleDataModel extends Model {
+class dataModel extends Model {
 
     public $timestamps = false;
 
@@ -37,16 +37,8 @@ class SimpleDataModel extends Model {
 
       try {
 
-        if($params['name'] != null) {
-
-          $this->insert($this->parseParams($params));
-          return $this->getData();
-
-        } else {
-
-          return ErrorHandler::getErrorMsg(4004);
-
-        }
+        $this->insert($this->parseParams($params));
+        return $this->getData();
 
       } catch (QueryException $e) {
 
@@ -60,16 +52,8 @@ class SimpleDataModel extends Model {
 
       try {
 
-        if($params['name'] != null && $params['id'] != null) {
-
-          $this->where('id', $params['id'])->update($this->parseParams($params));
-          return $this->getData();
-
-        } else {
-
-          return ErrorHandler::getErrorMsg(4004);
-
-        }
+        $this->where('id', $params['id'])->update($this->parseParams($params));
+        return $this->getData();
 
       } catch (QueryException $e) {
 
@@ -83,22 +67,12 @@ class SimpleDataModel extends Model {
 
       try {
 
-        if(!empty($params)) {
-
-          $this->whereIn('id', explode(",",$params['ids']))->delete();
-
-          return $this->getData();
-
-        } else {
-
-          return ErrorHandler::getErrorMsg(100);
-
-        }
-
+        $this->whereIn('id', explode(",",$params['ids']))->delete();
+        return $this->getData();
 
       } catch (QueryException $e) {
 
-          return ErrorHandler::getErrorMsg($e->errorInfo[1]);
+        return ErrorHandler::getErrorMsg($e->errorInfo[1]);
 
       }
 

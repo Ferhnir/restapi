@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class StoreDataCtrl extends Controller {
 
+  protected $tableName;
   private $model;
 
   public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
@@ -21,20 +22,26 @@ class StoreDataCtrl extends Controller {
         "status" => "error",
         "message" => "No data sent, failed to store"
       ]);
-    }
+    }    
+
+    $this->tableName = $request->getAttribute('route')->getArgument('model');
 
     $this->model = new ApiData();
-    $this->model->setTable($request->getAttribute('route')->getArgument('model'));
+    $this->model->setTable($this->tableName);
     $this->model->setFillable(array_keys($request->getParams()));
 
     try {
+
       $this->model->insert($request->getParams());
       return $response->withJson($this->model->get());
+
     } catch (QueryException $e) {
+
       return $response->withJson([
         'status' => 'error',
         'message' => $e->errorInfo[2]
       ]);
+      
     }
   }
 

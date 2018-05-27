@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class UpdateDataCtrl extends Controller {
 
+  protected $tableName;
   private $model;
 
   public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
@@ -22,23 +23,29 @@ class UpdateDataCtrl extends Controller {
         "message" => "No data sent, failed to update"
       ]);
     }
+
+    $this->tableName = $request->getAttribute('route')->getArgument('model');
     
     $this->model = new ApiData();
-    $this->model->setTable($request->getAttribute('route')->getArgument('model'));
+    $this->model->setTable($this->tableName);
     $this->model->setFillable(array_keys($request->getParams()));
 
     
     try {
+
       $this->model
         ->where('id',$request->getParam('id'))
         ->update($request->getParams());
 
       return $response->withJson($this->model->get());
+
     } catch (QueryException $e) {
+
       return $response->withJson([
         'status' => 'error',
         'message' => $e->errorInfo[2]
       ]);
+      
     }
   }
 

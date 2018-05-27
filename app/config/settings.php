@@ -18,7 +18,7 @@ return [
 
         // Database connection settings
         'token' => [
-            'secret' => 'afromoths1984',
+            'secret' => '*******',
             'validation' => 1
         ],
     ],

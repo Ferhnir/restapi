@@ -1,0 +1,5 @@
+app/work_files
+app/config/settings.php
+app/.env
+vendor/
+.gitignore

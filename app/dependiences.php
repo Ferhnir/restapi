@@ -1,71 +1,80 @@
 <?php
 // DIC configuration
-use Slim\Container;
 
 $container = $app->getContainer();
 
 // Database connection
-$container['db'] = function ($container) {
-  $capsule = new \Illuminate\Database\Capsule\Manager;
-  $capsule->addConnection($container['settings']['db']);
+$capsule = new \Illuminate\Database\Capsule\Manager;
+$capsule->addConnection($container['settings']['db']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
-  $capsule->setAsGlobal();
-  $capsule->bootEloquent();
-
+$container['db'] = function($container) use ($capsule){
   return $capsule;
 };
 
-$container['authCtrl'] = function ($c) {
-  $table = $c->get('db')->table('users');
-  $controller = new \App\Controllers\AuthCtrl($table);
-  return $controller;
+//Controllers
+$container['token'] = function ($c) {
+  $token = $c['settings']['token'];
+  return $token;
 };
 
-$container['insectAdult'] = function ($c) {
-  $table = $c->get('db')->table('adult');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['AuthCtrl'] = function ($c) {
+  return new \App\Controllers\AuthCtrl($c);
 };
 
-$container['insectCountries'] = function ($c) {  
-  $table = $c->get('db')->table('countries');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['AdultCtrl'] = function ($c) {
+  return new \App\Controllers\AdultCtrl($c);
 };
 
-$container['insectFood'] = function ($c) {  
-  $table = $c->get('db')->table('food');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['FamilyCtrl'] = function ($c) {
+  return new \App\Controllers\FamilyCtrl($c);
 };
 
-$container['insectFamilies'] = function ($c) {  
-  $table = $c->get('db')->table('families');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['SubfamilyCtrl'] = function ($c) {
+  return new \App\Controllers\SubfamilyCtrl($c);
 };
 
-$container['insectSubfamilies'] = function ($c) {
-  $table = $c->get('db')->table('subfamilies');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['TribeCtrl'] = function ($c) {
+  return new \App\Controllers\TribeCtrl($c);
 };
 
-$container['insectTribes'] = function ($c) {
-  $table = $c->get('db')->table('tribes');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['GenusCtrl'] = function ($c) {
+  return new \App\Controllers\GenusCtrl($c);
 };
 
-$container['insectGenus'] = function ($c) {
-  $table = $c->get('db')->table('genus');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['SpeciesCtrl'] = function ($c) {
+  return new \App\Controllers\SpeciesCtrl($c);
 };
 
-$container['insectSpecies'] = function ($c) {
-  $table = $c->get('db')->table('species');
-  $controller = new \App\Controllers\dataCtrl($table);
-  return $controller;
+$container['CountryCtrl'] = function ($c) {
+  return new \App\Controllers\CountryCtrl($c);
 };
+
+$container['FoodCtrl'] = function ($c) {
+  return new \App\Controllers\FoodCtrl($c);
+};
+
+$container['TestCtrl'] = function ($c) {
+  return new \App\Controllers\TestCtrl($c);
+};
+
+
+$container['GetDataCtrl'] = function ($c) {
+  return new \App\Controllers\GetDataCtrl($c);
+};
+
+$container['StoreDataCtrl'] = function ($c) {
+  return new \App\Controllers\StoreDataCtrl($c);
+};
+
+$container['UpdateDataCtrl'] = function ($c) {
+  return new \App\Controllers\UpdateDataCtrl($c);
+};
+
+$container['DestroyDataCtrl'] = function ($c) {
+  return new \App\Controllers\DestroyDataCtrl($c);
+}
+
+
 ?>

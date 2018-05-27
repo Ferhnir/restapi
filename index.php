@@ -31,7 +31,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "algorithm" => ["HS256"],
     "rules" => [
         new \Slim\Middleware\JwtAuthentication\RequestPathRule([
-            "passthrough" => ["/auth"]
+            "passthrough" => ["/auth", "/token"]
         ]),
         new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
             "passthrough" => ["GET","OPTIONS"]

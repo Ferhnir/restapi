@@ -16,7 +16,9 @@
         "monolog/monolog": "^1.17",
         "tuupola/slim-jwt-auth": "^2.3",
         "illuminate/database": "~5.1",
-        "robmorgan/phinx": "^0.5.1"
+        "robmorgan/phinx": "^0.5.1",
+        "nesbot/carbon": "^1.27",
+        "php-di/php-di": "^6.0"
     },
     "autoload-dev": {
         "psr-4": {

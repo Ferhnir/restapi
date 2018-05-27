@@ -4,12 +4,16 @@ namespace App\Controllers;
 
 class Controller {
 
-    protected $container;
+    protected $ci;
 
-    public function __construct($container) {
+    public function __construct($ci) {
+        $this->ci = $ci;
+    }
 
-        $this->container = $container;
-
+    public function __get($property){
+        if($this->ci->{$property}){
+            return $this->ci->{$property};
+        }
     }
 
 }

@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\ApiData;
+
+use Illuminate\Database\Query\Builder;
+use Illuminate\Database\QueryException;
+
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class StoreDataCtrl extends Controller {
+
+  private $model;
+
+  public function __invoke(ServerRequestInterface $request, ResponseInterface $response) {
+
+    if(!$request->getParams()){
+      return $response->withJson([
+        "status" => "error",
+        "message" => "No data sent, failed to store"
+      ]);
+    }
+
+    $this->model = new ApiData();
+    $this->model->setTable($request->getAttribute('route')->getArgument('model'));
+    $this->model->setFillable(array_keys($request->getParams()));
+
+    try {
+      $this->model->insert($request->getParams());
+      return $response->withJson($this->model->get());
+    } catch (QueryException $e) {
+      return $response->withJson([
+        'status' => 'error',
+        'message' => $e->errorInfo[2]
+      ]);
+    }
+  }
+
+}
+
+?>

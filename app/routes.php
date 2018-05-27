@@ -1,16 +1,19 @@
 <?php
-  //Welcome page
-  require 'app/routes/default.php';
-  //Auth 
-  require 'app/routes/auth.php';
-  //Data operations simple
-  require 'app/routes/insectAdult.php';
-  require 'app/routes/insectFamilies.php';
-  require 'app/routes/insectCountries.php';
-  require 'app/routes/insectFood.php';  
-  //Data operations advanced
-  require 'app/routes/insectSubfamilies.php';
-  require 'app/routes/insectTribes.php';
-  require 'app/routes/insectGenus.php';
-  require 'app/routes/insectSpecies.php';
-  ?>
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+$app->get('/', function (ServerRequestInterface $request, ResponseInterface $response) {
+  return $this->response->withJson('Africanmoths Rest Api');
+});
+//Auth 
+$app->post('/auth', \AuthCtrl::class . ':auth')->setName('auth.generate.token');
+
+//Insect data
+$app->group('/insect', function(){
+  $this->get('/{model}',\GetDataCtrl::class)->setName('api.data.index');
+  $this->post('/{model}',\StoreDataCtrl::class)->setName('api.data.store');
+  $this->put('/{model}',\UpdateDataCtrl::class)->setName('api.data.update');
+  $this->delete('/{model}', \DestroyDataCtrl::class)->setName('api.data.delete');
+});
+
+?>

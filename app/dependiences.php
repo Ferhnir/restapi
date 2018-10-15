@@ -27,16 +27,16 @@ $container['AdultCtrl'] = function ($c) {
   return new \App\Controllers\AdultCtrl($c);
 };
 
-$container['FamilyCtrl'] = function ($c) {
-  return new \App\Controllers\FamilyCtrl($c);
+$container['FamiliesCtrl'] = function ($c) {
+  return new \App\Controllers\FamiliesCtrl($c);
 };
 
-$container['SubfamilyCtrl'] = function ($c) {
-  return new \App\Controllers\SubfamilyCtrl($c);
+$container['SubfamiliesCtrl'] = function ($c) {
+  return new \App\Controllers\SubfamiliesCtrl($c);
 };
 
-$container['TribeCtrl'] = function ($c) {
-  return new \App\Controllers\TribeCtrl($c);
+$container['TribesCtrl'] = function ($c) {
+  return new \App\Controllers\TribesCtrl($c);
 };
 
 $container['GenusCtrl'] = function ($c) {

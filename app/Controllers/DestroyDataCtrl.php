@@ -33,7 +33,7 @@ class DestroyDataCtrl extends Controller {
     try {
       
       $this->model
-        ->whereIn('id', explode(",",$request->getParam('ids')))
+        ->whereIn('id', explode(",", $request->getParam('ids')))
         ->delete();
 
       $query = $this->model->get();
@@ -43,10 +43,12 @@ class DestroyDataCtrl extends Controller {
         $response->withJson($query);
       
     } catch (QueryException $e) {
+      
       return $response->withJson([
         'status' => 'error',
         'message' => $e->errorInfo[2]
       ]);
+
     }
   }
 
